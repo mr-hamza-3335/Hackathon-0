@@ -121,7 +121,7 @@ python -c "from dotenv import load_dotenv; import os; load_dotenv(); print('Key 
 
 ---
 
-### Task 1.5: Git Repository — TODO
+### Task 1.5: Git Repository — DONE
 
 **Description:** Initialize git repo, create initial commit with full scaffold.
 
@@ -597,7 +597,7 @@ END-TO-END: PASSED
 
 ---
 
-### Task 3.3: Unit Tests — TODO
+### Task 3.3: Unit Tests — DONE
 
 **Description:** Write pytest unit tests for the core modules: markdown parser, task manager, approval gate, and file watcher.
 
@@ -784,7 +784,7 @@ vault/HALT.md.disabled
 
 ---
 
-### Task 4.6: README — TODO
+### Task 4.6: README — DONE
 
 **Description:** Write the project README with overview, quick start, architecture summary, demo instructions, and contribution guide.
 
@@ -808,7 +808,7 @@ README.md
 
 ---
 
-### Task 4.7: Hackathon Packaging — TODO
+### Task 4.7: Hackathon Packaging — DONE
 
 **Description:** Final preparation for hackathon submission: clean up test artifacts, verify git history, ensure `.env` is not committed, create a release tag.
 
@@ -852,20 +852,16 @@ git tag v1.0.0-bronze -m "Bronze tier MVP for hackathon demo"
 
 | Phase | Tasks | Done | TODO |
 |---|---|---|---|
-| **Phase 1: Setup** | 5 | 4 | 1 (git init) |
+| **Phase 1: Setup** | 5 | 5 | 0 |
 | **Phase 2: Core System** | 10 | 10 | 0 |
-| **Phase 3: Automation** | 4 | 3 | 1 (unit tests) |
-| **Phase 4: Demo & Docs** | 7 | 5 | 2 (README, packaging) |
-| **TOTAL** | **26** | **22** | **4** |
+| **Phase 3: Automation** | 4 | 4 | 0 |
+| **Phase 4: Demo & Docs** | 7 | 7 | 0 |
+| **TOTAL** | **26** | **26** | **0** |
 
-### Remaining TODO Tasks
+### All Tasks Complete
 
-| ID | Task | Priority | Effort |
-|---|---|---|---|
-| 1.5 | Git repository init | Medium | 5 min |
-| 3.3 | Unit tests (pytest) | Medium | 30 min |
-| 4.6 | README.md | High | 15 min |
-| 4.7 | Hackathon packaging | High | 10 min |
+Every task across all 4 phases has been implemented, tested, and committed.
+Tagged release: `v1.0.0-bronze` — 45 files, 6,652 lines, 43 tests passing.
 
 ### Critical Path to Demo
 
