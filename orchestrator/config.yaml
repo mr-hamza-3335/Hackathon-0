@@ -1,0 +1,28 @@
+vault:
+  root: ./vault
+  inbox: ./vault/inbox
+  tasks: ./vault/tasks
+  logs: ./vault/logs
+  context: ./vault/context
+  halt_file: ./vault/HALT.md
+
+orchestrator:
+  poll_interval_seconds: 3
+  max_retries: 1
+  retry_delay_seconds: 30
+  max_actions_per_hour: 10
+
+claude:
+  max_tokens: 4096
+  temperature: 0.3
+
+mcp:
+  servers:
+    demo:
+      command: node
+      args: ["./mcp-servers/demo-server/index.js"]
+
+approval:
+  require_for_tiers: [T2, T3, T4]
+  poll_interval_seconds: 2
+  timeout_minutes: 60

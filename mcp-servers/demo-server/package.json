@@ -1,0 +1,13 @@
+{
+  "name": "ai-employee-demo-server",
+  "version": "1.0.0",
+  "description": "Bronze MVP MCP server for Personal AI Employee",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}
