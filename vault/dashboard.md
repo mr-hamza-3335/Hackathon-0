@@ -1,6 +1,6 @@
 ---
 title: AI Employee Dashboard
-updated: "2026-02-12T16:37:15+00:00"
+updated: "2026-02-15T16:26:37+00:00"
 ---
 
 # AI Employee Dashboard
@@ -9,8 +9,8 @@ updated: "2026-02-12T16:37:15+00:00"
 
 | Component | Status |
 |---|---|
-| File Watcher | Unknown |
-| Orchestrator | Running |
+| File Watcher | Simulated |
+| Orchestrator | Demo Complete |
 | MCP Servers | Standby |
 
 ## Pending Approvals
@@ -21,10 +21,10 @@ _No pending approvals._
 
 | Time | Task | Action | Status |
 |---|---|---|---|
-| 2026-02-12T16:36:44 | task-test-001 | status-change:executing->completed | success |
-| 2026-02-12T16:36:44 | task-test-001 | status-change:approved->executing | success |
-| 2026-02-12T16:36:44 | task-test-001 | status-change:planning->awaiting-approval | success |
-| 2026-02-12T16:36:44 | task-test-001 | status-change:pending->planning | success |
+| 2026-02-15T16:26:37 | task-20260215-162636-e2e | task-completed | success |
+| 2026-02-15T16:26:37 | task-20260215-162636-e2e | execute-none | success |
+| 2026-02-15T16:26:37 | task-20260215-162636-e2e | execute-draft_email | success |
+| 2026-02-15T16:26:37 | task-20260215-162636-e2e | execute-none | success |
 
 ## Active Tasks
 
