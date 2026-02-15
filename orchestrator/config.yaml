@@ -21,6 +21,9 @@ mcp:
     demo:
       command: node
       args: ["./mcp-servers/demo-server/index.js"]
+    email:
+      command: node
+      args: ["./mcp-servers/email-server/server.js"]
 
 approval:
   require_for_tiers: [T2, T3, T4]

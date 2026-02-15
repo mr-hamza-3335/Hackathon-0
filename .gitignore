@@ -31,8 +31,10 @@ Thumbs.db
 # Runtime artifacts (generated during execution)
 vault/drafts/
 vault/output/
+vault/reports/
 vault/logs/2026-*
 vault/tasks/archive/2026-*
+vault/completed/2026-*
 
 # Claude Code
 .claude/

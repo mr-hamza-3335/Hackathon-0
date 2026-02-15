@@ -21,3 +21,13 @@ title: Tools Registry
 - **Output**: `{ success, path, size_bytes }`
 - **Risk Tier**: T1 (Internal Write)
 - **Approval**: Not required (Bronze: required)
+
+## email-server
+
+### send_email
+
+- **Description**: Compose and send a professional email (simulated in Bronze)
+- **Input**: `{ to, subject, body, cc? }`
+- **Output**: `{ success, message_id, file, status, preview }`
+- **Risk Tier**: T3 (External Write)
+- **Approval**: Required

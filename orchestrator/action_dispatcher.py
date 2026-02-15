@@ -16,9 +16,11 @@ from orchestrator.config import config
 
 logger = logging.getLogger("orchestrator.dispatcher")
 
-# MCP server location
-_MCP_SERVER_DIR = Path(__file__).parent.parent / "mcp-servers" / "demo-server"
-_MCP_SERVER_SCRIPT = _MCP_SERVER_DIR / "index.js"
+# MCP server locations
+_MCP_DEMO_DIR = Path(__file__).parent.parent / "mcp-servers" / "demo-server"
+_MCP_DEMO_SCRIPT = _MCP_DEMO_DIR / "index.js"
+_MCP_EMAIL_DIR = Path(__file__).parent.parent / "mcp-servers" / "email-server"
+_MCP_EMAIL_SCRIPT = _MCP_EMAIL_DIR / "server.js"
 
 
 @dataclass
@@ -42,12 +44,20 @@ class MCPClient:
     def __init__(self) -> None:
         self._request_id = 0
 
+    # Map tool names to their MCP server scripts
+    _TOOL_SERVER_MAP: dict[str, Path] = {
+        "draft_email": _MCP_DEMO_SCRIPT,
+        "create_file": _MCP_DEMO_SCRIPT,
+        "send_email": _MCP_EMAIL_SCRIPT,
+    }
+
     def call_tool(self, tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         """Call an MCP tool and return the parsed result.
 
-        Spawns the MCP server, sends an initialize + tool call, then
-        reads the response. Each call is a fresh process (Bronze simplicity).
+        Spawns the appropriate MCP server, sends an initialize + tool call,
+        then reads the response. Each call is a fresh process (Bronze simplicity).
         """
+        server_script = self._TOOL_SERVER_MAP.get(tool_name, _MCP_DEMO_SCRIPT)
         self._request_id += 1
 
         # Build JSON-RPC messages
@@ -87,7 +97,7 @@ class MCPClient:
 
         try:
             result = subprocess.run(
-                ["node", str(_MCP_SERVER_SCRIPT)],
+                ["node", str(server_script)],
                 input=stdin_data,
                 capture_output=True,
                 text=True,
@@ -130,6 +140,7 @@ class ActionDispatcher:
         self._mcp = MCPClient()
         self._handlers: dict[str, Any] = {
             "draft_email": self._handle_draft_email,
+            "send_email": self._handle_send_email,
             "create_file": self._handle_create_file,
             "none": self._handle_noop,
         }
@@ -232,6 +243,28 @@ class ActionDispatcher:
             return f"Email draft saved: {result.get('file', 'vault/drafts/')}"
         else:
             raise RuntimeError(result.get("error", "draft_email failed"))
+
+    def _handle_send_email(self, step: dict[str, str]) -> str:
+        """Send an email via the MCP email server."""
+        result = self._mcp.call_tool("send_email", {
+            "to": "team@example.com",
+            "subject": "AI Employee — Task Report",
+            "body": (
+                "This email was composed and sent by the Personal AI Employee system.\n\n"
+                "The task has been processed and the results are available "
+                "in the Obsidian vault.\n\n"
+                "Best regards,\nAI Employee (Bronze Mode)"
+            ),
+            "vault_path": str(config.vault.root),
+        })
+
+        if result.get("success"):
+            return (
+                f"Email sent: {result.get('message_id', 'unknown')} "
+                f"(draft: {result.get('file', 'vault/drafts/')})"
+            )
+        else:
+            raise RuntimeError(result.get("error", "send_email failed"))
 
     def _handle_create_file(self, step: dict[str, str]) -> str:
         """Create a file via the MCP demo server."""

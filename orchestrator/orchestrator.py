@@ -63,6 +63,7 @@ from orchestrator.action_dispatcher import (
     ActionDispatcher, format_results_markdown,
 )
 from orchestrator.dashboard import DashboardUpdater
+from orchestrator.reporter import write_report
 from watchers.utils.markdown_parser import (
     parse_frontmatter, update_frontmatter,
 )
@@ -375,6 +376,14 @@ class AIEmployeeOrchestrator:
             )
 
             logger.info(f"COMPLETED: {task.title}")
+
+            # Auto-generate CEO briefing report after task completion
+            try:
+                report_path = write_report()
+                logger.info(f"CEO report updated: {report_path.name}")
+            except Exception as report_err:
+                logger.warning(f"Report generation skipped: {report_err}")
+
             logger.info("")
 
         except Exception as e:

@@ -1,0 +1,14 @@
+{
+  "name": "ai-employee-email-server",
+  "version": "1.0.0",
+  "description": "MCP email action server for Personal AI Employee",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  }
+}

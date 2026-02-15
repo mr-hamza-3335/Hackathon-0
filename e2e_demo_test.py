@@ -22,6 +22,7 @@ from orchestrator.task_manager import TaskManager, TaskStatus
 from orchestrator.claude_bridge import generate_plan
 from orchestrator.action_dispatcher import ActionDispatcher, format_results_markdown
 from orchestrator.dashboard import DashboardUpdater
+from orchestrator.reporter import write_report
 from watchers.utils.markdown_parser import parse_frontmatter, update_frontmatter
 
 # ── Global state ─────────────────────────────────────────────────────────────
@@ -429,10 +430,57 @@ def stage_6_archive_and_dashboard(task_path: Path) -> None:
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# STAGE 7: Verification
+# STAGE 7: CEO Briefing Report
 # ══════════════════════════════════════════════════════════════════════════════
 
-def stage_7_verify() -> None:
+def stage_7_ceo_report() -> None:
+    """Generate and verify the CEO briefing report."""
+    banner("STAGE 7: CEO BRIEFING REPORT")
+
+    try:
+        report_path = write_report()
+        if report_path.exists():
+            content = report_path.read_text(encoding="utf-8")
+            checks = {
+                "has_title": "CEO Briefing Report" in content,
+                "has_executive": "Executive Summary" in content,
+                "has_task_overview": "Task Overview" in content,
+                "has_recent_actions": "Recent Actions" in content,
+            }
+            all_ok = all(checks.values())
+            if all_ok:
+                log_stage("CEO Report Generated", "pass",
+                          f"Written to {report_path.name}")
+            else:
+                failed = [k for k, v in checks.items() if not v]
+                log_stage("CEO Report Generated", "fail",
+                          f"Missing sections: {failed}")
+        else:
+            log_stage("CEO Report Generated", "fail", "Report file not created")
+
+        # Verify reports directory
+        reports_dir = config.vault.root / "reports"
+        report_files = list(reports_dir.glob("*.md")) if reports_dir.exists() else []
+        if len(report_files) >= 2:
+            log_stage("Report Files Created", "pass",
+                      f"{len(report_files)} files (weekly + timestamped)")
+        elif len(report_files) == 1:
+            log_stage("Report Files Created", "pass",
+                      "1 report file created")
+        else:
+            log_stage("Report Files Created", "fail", "No report files found")
+
+    except Exception as e:
+        log_stage("CEO Report", "fail", str(e))
+        import traceback
+        traceback.print_exc()
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# STAGE 8: Verification
+# ══════════════════════════════════════════════════════════════════════════════
+
+def stage_8_verify() -> None:
     """Verify all outputs: logs, archive, dashboard."""
     banner("STAGE 7: FINAL VERIFICATION")
 
@@ -534,20 +582,21 @@ def print_summary() -> None:
 
     # Lifecycle stages table
     stages = [
-        ("1. INTAKE",     "Task Creation"),
-        ("2. VALIDATION", "Frontmatter Validation"),
-        ("3. WATCHER",    "Move to vault/tasks/"),
-        ("4. TRIGGER",    "Trigger File Written"),
-        ("5. PLANNING",   "Plan Generation"),
-        ("6. PLAN WRITE", "Plan Written to File"),
-        ("7. APPROVAL",   "Auto-Approval"),
-        ("8. EXECUTION",  "Step Execution"),
-        ("9. RESULTS",    "Results Written to File"),
-        ("10. COMPLETE",  "Transition: executing -> completed"),
-        ("11. ARCHIVE",   "Task Archived"),
-        ("12. DASHBOARD", "Dashboard Updated"),
-        ("13. AUDIT LOGS","Audit Logs Created"),
-        ("14. CLEANUP",   "Inbox Cleaned"),
+        ("1. INTAKE",      "Task Creation"),
+        ("2. VALIDATION",  "Frontmatter Validation"),
+        ("3. WATCHER",     "Move to vault/tasks/"),
+        ("4. TRIGGER",     "Trigger File Written"),
+        ("5. PLANNING",    "Plan Generation"),
+        ("6. PLAN WRITE",  "Plan Written to File"),
+        ("7. APPROVAL",    "Auto-Approval"),
+        ("8. EXECUTION",   "Step Execution"),
+        ("9. RESULTS",     "Results Written to File"),
+        ("10. COMPLETE",   "Transition: executing -> completed"),
+        ("11. ARCHIVE",    "Task Archived"),
+        ("12. DASHBOARD",  "Dashboard Updated"),
+        ("13. CEO REPORT", "CEO Report Generated"),
+        ("14. AUDIT LOGS", "Audit Logs Created"),
+        ("15. CLEANUP",    "Inbox Cleaned"),
     ]
 
     result_map = {r["stage"]: r for r in RESULTS}
@@ -609,7 +658,8 @@ def main() -> int:
     task_path = stage_4_approve(task_path)
     task_path = stage_5_execute(task_path)
     stage_6_archive_and_dashboard(task_path)
-    stage_7_verify()
+    stage_7_ceo_report()
+    stage_8_verify()
 
     # Summary
     print_summary()
