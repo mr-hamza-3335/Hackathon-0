@@ -20,7 +20,7 @@ from orchestrator.config import config
 from orchestrator.logger import audit
 from orchestrator.task_manager import TaskManager, TaskStatus, Task
 from orchestrator.approval_gate import ApprovalGate, ApprovalTimeout, SystemHalted
-from orchestrator.claude_bridge import generate_plan
+from orchestrator.ai_bridge import generate_plan
 from orchestrator.action_dispatcher import ActionDispatcher, format_results_markdown
 from orchestrator.dashboard import DashboardUpdater
 

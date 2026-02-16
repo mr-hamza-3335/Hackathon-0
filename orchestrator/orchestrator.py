@@ -27,7 +27,7 @@ Architecture:
     - config.py       → Configuration
     - task_manager.py  → Task lifecycle
     - approval_gate.py → Human approval
-    - claude_bridge.py → AI reasoning
+    - ai_bridge.py     → AI reasoning (Cohere)
     - action_dispatcher.py → MCP tool execution
     - dashboard.py     → Live status dashboard
     - logger.py        → Audit logging
@@ -58,7 +58,7 @@ from orchestrator.task_manager import TaskManager, TaskStatus, Task
 from orchestrator.approval_gate import (
     ApprovalGate, ApprovalTimeout, SystemHalted,
 )
-from orchestrator.claude_bridge import generate_plan
+from orchestrator.ai_bridge import generate_plan
 from orchestrator.action_dispatcher import (
     ActionDispatcher, format_results_markdown,
 )

@@ -7,8 +7,8 @@ A local-first AI agent that plans and executes tasks with full human oversight. 
 ```
   Drop Task  -->  AI Plans  -->  You Approve  -->  MCP Executes  -->  Everything Logged
       |              |               |                  |                    |
-   Watcher        Claude          Obsidian         MCP Server            Vault
-  (Python)       (CLI/Sim)       (Markdown)        (Node.js)         (Append-Only)
+   Watcher        Cohere          Obsidian         MCP Server            Vault
+  (Python)       (API/Sim)       (Markdown)        (Node.js)         (Append-Only)
 ```
 
 ---
@@ -35,11 +35,26 @@ That's it. The system is running.
 
 ---
 
+## Cohere API Setup
+
+The AI reasoning layer uses [Cohere](https://cohere.com/) for plan generation. To enable it:
+
+1. Sign up at [dashboard.cohere.com](https://dashboard.cohere.com/)
+2. Create an API key
+3. Add it to your `.env` file:
+   ```
+   COHERE_API_KEY=your-key-here
+   ```
+
+If `COHERE_API_KEY` is not set, the system runs in **simulation mode** — all orchestration works normally with pre-built demo responses, no API calls are made.
+
+---
+
 ## How It Works
 
 1. **You drop a markdown file** into `vault/inbox/`
 2. **The file watcher** detects it, validates YAML frontmatter, moves it to `vault/tasks/`
-3. **The orchestrator** calls Claude to generate a step-by-step plan
+3. **The orchestrator** calls Cohere to generate a step-by-step plan
 4. **The plan appears** in `vault/needs_action/` — open it in Obsidian
 5. **You review and approve** (move to `vault/approved/` or edit `status: approved`)
 6. **MCP servers execute** the approved actions (send emails, create files)
@@ -59,7 +74,7 @@ That's it. The system is running.
 │  ┌──────────────┐   ┌───────────────────┐   ┌────────────────────────────┐  │
 │  │  PERCEPTION   │   │   ORCHESTRATION   │   │          ACTION            │  │
 │  │               │   │                   │   │                            │  │
-│  │  Python       │──>│  Claude Code      │──>│  MCP Servers (Node.js)     │  │
+│  │  Python       │──>│  Cohere API       │──>│  MCP Servers (Node.js)     │  │
 │  │  File Watcher │   │  Reasoning Engine │   │  - demo-server             │  │
 │  │               │   │  State Machine    │   │  - email-server            │  │
 │  └──────────────┘   └─────────┬─────────┘   └────────────────────────────┘  │
@@ -83,7 +98,7 @@ That's it. The system is running.
 | Layer | Technology | Responsibility |
 |-------|-----------|----------------|
 | **Perception** | Python + watchdog | Monitor `vault/inbox/` for new task files |
-| **Orchestration** | Python + Claude CLI | Plan tasks, manage lifecycle, coordinate execution |
+| **Orchestration** | Python + Cohere API | Plan tasks, manage lifecycle, coordinate execution |
 | **Memory** | Obsidian vault (markdown) | Dashboard, tasks, logs, context, reports |
 | **Action** | Node.js + MCP SDK | Execute approved operations via tool servers |
 
@@ -107,7 +122,7 @@ That's it. The system is running.
    |---------------------->|                       |                      |
    |                       | 2. Validate & move    |                      |
    |                       |---------------------->|                      |
-   |                       |                       | 3. Claude plans      |
+   |                       |                       | 3. Cohere plans      |
    |                       |                       |                      |
    | 4. Review plan        |                       |                      |
    |<----------------------------------------------|                      |
@@ -148,7 +163,7 @@ That's it. The system is running.
 │   ├── orchestrator.py             # Unified orchestrator engine
 │   ├── task_manager.py             # 9-state task lifecycle machine
 │   ├── approval_gate.py            # Human approval polling
-│   ├── claude_bridge.py            # Claude CLI integration + simulation
+│   ├── ai_bridge.py                # Cohere API integration + simulation
 │   ├── action_dispatcher.py        # MCP tool routing and execution
 │   ├── reporter.py                 # CEO briefing report generator
 │   ├── dashboard.py                # Dashboard auto-updater
@@ -280,7 +295,7 @@ bash run_system.sh --demo       # Start + trigger demo
 ### What Happens
 1. **[0:00]** System starts, demo task drops into inbox
 2. **[0:15]** Watcher detects it, validates, moves to tasks
-3. **[0:30]** Claude generates a plan with actionable steps
+3. **[0:30]** Cohere generates a plan with actionable steps
 4. **[0:45]** Plan appears in `vault/needs_action/`
 5. **[1:00]** You move it to `vault/approved/`
 6. **[1:15]** MCP server sends email, saves draft to `vault/drafts/`
@@ -342,7 +357,7 @@ No external action executes without explicit human approval. The orchestrator ge
 | Capability | Bronze (Current) | Silver (Planned) |
 |-----------|-------------------|-------------------|
 | Task input | Manual file drop | Email/calendar triggers |
-| AI reasoning | Claude CLI (or simulation) | Claude API with structured output |
+| AI reasoning | Cohere API (or simulation) | Cohere API with structured output |
 | Email | Draft + simulated send | Gmail API integration |
 | Approval | File move / frontmatter edit | Obsidian plugin with buttons |
 | Concurrency | Single task at a time | Parallel task processing |
@@ -370,7 +385,7 @@ No external action executes without explicit human approval. The orchestrator ge
 |-----------|---------|---------|
 | Python | 3.11+ | Watchers, orchestrator, task management |
 | Node.js | 20+ | MCP action servers |
-| Claude Code CLI | Latest | AI reasoning (with simulation fallback) |
+| Cohere SDK | 5.0+ | AI reasoning via Cohere API (with simulation fallback) |
 | Obsidian | 1.5+ | Human interface and dashboard |
 | watchdog | 4.0+ | Filesystem monitoring |
 | MCP SDK | 1.0+ | Model Context Protocol for tool execution |

@@ -19,7 +19,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from orchestrator.config import config
 from orchestrator.logger import AuditLogger, console
 from orchestrator.task_manager import TaskManager, TaskStatus
-from orchestrator.claude_bridge import generate_plan
+from orchestrator.ai_bridge import generate_plan
 from orchestrator.action_dispatcher import ActionDispatcher, format_results_markdown
 from orchestrator.dashboard import DashboardUpdater
 from orchestrator.reporter import write_report
