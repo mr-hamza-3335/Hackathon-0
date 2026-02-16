@@ -26,6 +26,8 @@ class InboxHandler(FileSystemEventHandler):
             return
 
         logger.info(f"New file detected: {file_path.name}")
+        # Small delay to let the OS finish writing the file
+        time.sleep(0.5)
         self._process_task(file_path)
 
     def _process_task(self, file_path: Path) -> None:
