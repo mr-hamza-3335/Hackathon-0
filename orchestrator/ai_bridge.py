@@ -103,7 +103,7 @@ def call_ai(prompt: str, max_tokens: int | None = None) -> str:
 
     try:
         response = _cohere_client.chat(
-            model="command-r-plus",
+            model="command-a-03-2025",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=tokens,
         )
