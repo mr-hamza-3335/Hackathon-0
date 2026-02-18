@@ -38,5 +38,15 @@
     "description": "",
     "status": "scheduled",
     "created": "2026-02-18T14:44:48+00:00"
+  },
+  {
+    "id": "evt-20260218151226",
+    "title": "Step 4: Schedule event (tool: schedule_event, approval: yes)",
+    "date": "2026-02-20",
+    "time": "10:00",
+    "duration_minutes": 60,
+    "description": "",
+    "status": "scheduled",
+    "created": "2026-02-18T15:12:26+00:00"
   }
 ]
