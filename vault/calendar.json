@@ -1,0 +1,42 @@
+[
+  {
+    "id": "evt-20260217163536",
+    "title": "Step 4: Schedule event (tool: schedule_event, approval: yes)",
+    "date": "2026-02-20",
+    "time": "10:00",
+    "duration_minutes": 60,
+    "description": "",
+    "status": "scheduled",
+    "created": "2026-02-17T16:35:36+00:00"
+  },
+  {
+    "id": "evt-20260217165209",
+    "title": "Step 4: Schedule event (tool: schedule_event, approval: yes)",
+    "date": "2026-02-20",
+    "time": "10:00",
+    "duration_minutes": 60,
+    "description": "",
+    "status": "scheduled",
+    "created": "2026-02-17T16:52:09+00:00"
+  },
+  {
+    "id": "evt-20260218144432",
+    "title": "Step 4: Schedule event (tool: schedule_event, approval: yes)",
+    "date": "2026-02-20",
+    "time": "10:00",
+    "duration_minutes": 60,
+    "description": "",
+    "status": "scheduled",
+    "created": "2026-02-18T14:44:32+00:00"
+  },
+  {
+    "id": "evt-20260218144448",
+    "title": "Step 4: Schedule event (tool: schedule_event, approval: yes)",
+    "date": "2026-02-20",
+    "time": "10:00",
+    "duration_minutes": 60,
+    "description": "",
+    "status": "scheduled",
+    "created": "2026-02-18T14:44:48+00:00"
+  }
+]

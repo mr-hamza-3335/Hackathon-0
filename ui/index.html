@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Employee — Silver Dashboard</title>
+    <link rel="stylesheet" href="/ui/style.css">
+</head>
+<body>
+
+<header class="header">
+    <h1><span>AI Employee</span> — Silver Dashboard</h1>
+    <span id="ws-status" class="ws-status disconnected">Disconnected</span>
+</header>
+
+<div class="container">
+
+    <!-- Create Task -->
+    <div class="card">
+        <h2>Create Task</h2>
+        <form id="create-form">
+            <div class="form-group">
+                <label for="task-title">Title</label>
+                <input type="text" id="task-title" placeholder="e.g. Send weekly report" required>
+            </div>
+            <div class="form-group">
+                <label for="task-body">Description</label>
+                <textarea id="task-body" placeholder="Task details..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="task-priority">Priority</label>
+                <select id="task-priority">
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Task</button>
+        </form>
+    </div>
+
+    <!-- Demo & Actions -->
+    <div class="card">
+        <h2>Demo Pipeline</h2>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px;">
+            Run a full lifecycle demo: create &rarr; plan &rarr; approve &rarr; execute &rarr; archive
+        </p>
+        <button id="demo-btn" class="btn btn-warning" onclick="runDemo()">Run Demo Pipeline</button>
+        <ul id="demo-stages" class="demo-stages" style="margin-top: 12px;"></ul>
+    </div>
+
+    <!-- Task List -->
+    <div class="card full-width">
+        <h2>Tasks</h2>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="planning">Planning</button>
+            <button class="filter-btn" data-filter="awaiting-approval">Awaiting Approval</button>
+            <button class="filter-btn" data-filter="executing">Executing</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+            <button class="filter-btn" data-filter="failed">Failed</button>
+        </div>
+        <ul id="task-list" class="task-list">
+            <li class="empty-state">Loading tasks...</li>
+        </ul>
+    </div>
+
+    <!-- Log Viewer -->
+    <div class="card full-width">
+        <h2>Activity Log</h2>
+        <div class="form-group" style="margin-bottom: 12px;">
+            <input type="text" id="log-task-id" placeholder="Enter task ID to view logs">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="loadLogs()">Load Logs</button>
+        <div id="log-viewer" class="log-viewer" style="margin-top: 12px;">
+            <div class="empty-state">Enter a task ID above to view logs</div>
+        </div>
+    </div>
+</div>
+
+<!-- Task Detail Modal -->
+<div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 id="modal-title">Task Details</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div id="modal-body" class="modal-body"></div>
+    </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container" class="toast-container"></div>
+
+<script src="/ui/app.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 ---
 title: AI Employee Dashboard
-updated: "2026-02-16T16:58:44+00:00"
+updated: "2026-02-18T14:44:18+00:00"
 ---
 
 # AI Employee Dashboard
@@ -10,7 +10,7 @@ updated: "2026-02-16T16:58:44+00:00"
 | Component | Status |
 |---|---|
 | File Watcher | Unknown |
-| Orchestrator | Running |
+| Orchestrator | Silver-Verified |
 | MCP Servers | Standby |
 
 ## Pending Approvals
@@ -21,10 +21,10 @@ _No pending approvals._
 
 | Time | Task | Action | Status |
 |---|---|---|---|
-| 2026-02-16T16:58:27 | system | generate-ceo-report | success |
-| 2026-02-16T16:58:27 | task-20260216-165816-e2e | task-completed | success |
-| 2026-02-16T16:58:26 | task-20260216-165816-e2e | status-change:approved->executing | success |
-| 2026-02-16T16:58:26 | task-20260216-165816-e2e | status-change:planning->awaiting-approval | success |
+| 2026-02-18T14:43:41 | auto-demo-001 | status-change:executing->completed | success |
+| 2026-02-18T14:43:40 | auto-demo-001 | status-change:approved->executing | success |
+| 2026-02-18T14:43:40 | auto-demo-001 | status-change:planning->awaiting-approval | success |
+| 2026-02-18T14:43:32 | auto-demo-001 | status-change:pending->planning | success |
 
 ## Active Tasks
 
