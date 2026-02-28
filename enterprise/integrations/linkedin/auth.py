@@ -11,7 +11,6 @@ exchanges it for tokens, and stores them in the encrypted credential vault.
 
 Safe Mode — only these scopes are requested:
     - r_liteprofile    (read basic profile: name, ID)
-    - r_emailaddress   (read email)
     - w_member_social  (publish posts)
 
 No scraping, no auto-connect, no messaging automation.
