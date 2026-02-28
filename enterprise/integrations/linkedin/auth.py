@@ -10,8 +10,6 @@ captures the authorization code via a local HTTP callback server,
 exchanges it for tokens, and stores them in the encrypted credential vault.
 
 Safe Mode — only these scopes are requested:
-    - openid           (OpenID Connect identity)
-    - profile          (read basic profile: name, ID)
     - w_member_social  (publish posts)
 
 No scraping, no auto-connect, no messaging automation.
